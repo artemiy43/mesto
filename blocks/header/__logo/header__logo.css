@@ -1,0 +1,10 @@
+.header__logo {
+  height: 100%;
+}
+
+@media (max-width: 425px)
+{
+  .header__logo {
+    margin-left: 27px;
+  }
+}

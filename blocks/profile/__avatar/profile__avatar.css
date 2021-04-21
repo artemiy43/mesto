@@ -1,0 +1,11 @@
+.profile__avatar {
+  height: 100%;
+  margin-right: 30px;
+}
+
+@media (max-width: 1100px)
+{
+  .profile__avatar {
+    margin: 0 auto;
+  }
+}
