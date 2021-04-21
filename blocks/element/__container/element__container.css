@@ -1,3 +1,5 @@
 .element__container {
-  position: relative;
+  display: grid;
+  grid-template-columns: 196px 1fr;
+  grid-template-rows: 1fr;
 }
