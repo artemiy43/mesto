@@ -1,4 +1,4 @@
-.save-button__text {
+.popup__text-button {
   margin: 0;
   font-weight: normal;
   font-size: 18px;
@@ -10,7 +10,7 @@
 
 @media (max-width: 435px)
 {
-  .save-button__text {
+  .popup__text-button {
     font-size: 14px;
     line-height: 17px;
   }
