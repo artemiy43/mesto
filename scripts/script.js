@@ -1,56 +1,36 @@
-let editButton = document.querySelector('.edit-button');
-let popup = document.querySelector('.popup');
-let closeButton = popup.querySelector('.popup__close-button');
+let editButton = document.querySelector('.edit-button'); //кнопка "редактировать"
+let popup = document.querySelector('.popup'); // сам блок popup
+let closeButton = popup.querySelector('.popup__close-button'); // кнопка "Закрыть" в блоке popup
 
 
-let formElement = document.querySelector('.popup__form');
-let nameInput = formElement.querySelector('.popup__name');
-let jobInput = formElement.querySelector('.popup__description');
+let formElement = document.querySelector('.popup__form'); // форма блока popup
+let nameInput = formElement.querySelector('.popup__input_name'); // первое текстовое поле из формы popup
+let jobInput = formElement.querySelector('.popup__input_description'); // второе текстовое поле из формы popup
 
-let nameOutput = document.querySelector('.profile__name');
-let jobOutput = document.querySelector('.profile__description');
+let nameOutput = document.querySelector('.profile__name'); // имя в profile
+let jobOutput = document.querySelector('.profile__description'); // описание в profile
 
-let likeButton = document.querySelector('.element__like');
-nameInput.setAttribute("placeholder", nameOutput.textContent);
-jobInput.setAttribute("placeholder", jobOutput.textContent);
 
-function showClick() {
+function showClick() {                              // функция открытия popup
   popup.classList.add('popup_opened');
+  nameInput.value = nameOutput.textContent;
+  jobInput.value = jobOutput.textContent;
 }
 
-function closeClick() {
+function closeClick() {                            // функция закрытия popup
   popup.classList.remove('popup_opened');
 }
 
-function activeClick() {
-  if (likeButton.classList.contains('element__like_active') !== true) {
-    likeButton.classList.add('element__like_active');
-  }
-  else
-  {
-    likeButton.classList.remove('element__like_active');
-  }
-}
-
-function formSubmitHandler (evt) {
+function formSubmitHandler (evt) {                // функция редактирования имени и информации о себе в profile
   evt.preventDefault();
 
-  let nameIValue = nameInput.value;
-  let jobIValue = jobInput.value;
+  nameOutput.textContent = nameInput.value;
+  jobOutput.textContent = jobInput.value;
 
-  nameOutput.textContent = nameIValue;
-  jobOutput.textContent = jobIValue;
-
-  nameInput.value = '';
-  jobInput.value = '';
-
-  nameInput.setAttribute("placeholder", nameOutput.textContent);
-  jobInput.setAttribute("placeholder", jobOutput.textContent);
-  popup.classList.remove('popup_opened');
+  closeClick();
 }
 
-formElement.addEventListener('submit', formSubmitHandler);
+formElement.addEventListener('submit', formSubmitHandler); // обработчик события редактирования profile
 
-editButton.addEventListener('click', showClick);
-closeButton.addEventListener('click', closeClick);
-likeButton.addEventListener('click', activeClick);
+editButton.addEventListener('click', showClick);          // обработчик события открытия popup
+closeButton.addEventListener('click', closeClick);        // обработчик события закрытия popup

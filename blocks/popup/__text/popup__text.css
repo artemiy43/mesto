@@ -8,13 +8,11 @@
   color: #000000;
 }
 
-@media (max-width: 435px)
+@media (max-width: 500px)
 {
   .popup__text {
-    font-weight: 900;
     font-size: 18px;
     line-height: 22px;
-    color: #000000;
     padding: 25px 0 75px;
     margin-left: 22px;
   }

@@ -1,6 +1,7 @@
 .header {
   width: calc(100% - 400px);
   padding-top: 45px;
+  border-bottom: 1px solid #545454;
 }
 
 @media (max-width: 1100px)
