@@ -33,5 +33,6 @@
   .add-button {
     width: 282px;
     background-repeat: no-repeat;
+    background-image: url(../../images/Vector2.svg);
   }
 }

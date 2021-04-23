@@ -10,10 +10,3 @@
     justify-self: center;
   }
 }
-
-@media (max-width: 720px)
-{
-  .element {
-    justify-self: center;
-  }
-}

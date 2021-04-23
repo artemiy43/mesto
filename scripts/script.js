@@ -4,8 +4,8 @@ let closeButton = popup.querySelector('.popup__close-button'); // кнопка "
 
 
 let formElement = document.querySelector('.popup__form'); // форма блока popup
-let nameInput = formElement.querySelector('.popup__input_name'); // первое текстовое поле из формы popup
-let jobInput = formElement.querySelector('.popup__input_description'); // второе текстовое поле из формы popup
+let nameInput = formElement.querySelector('.popup__input_type_name'); // первое текстовое поле из формы popup
+let jobInput = formElement.querySelector('.popup__input_type_description'); // второе текстовое поле из формы popup
 
 let nameOutput = document.querySelector('.profile__name'); // имя в profile
 let jobOutput = document.querySelector('.profile__description'); // описание в profile

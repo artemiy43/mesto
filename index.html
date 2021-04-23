@@ -8,7 +8,7 @@
   <title>Mesto</title>
 </head>
 <body class="body">
-  <div class="page">
+  <div class="page page__container">
     <header class="header page__container">
       <img src="./images/logo.svg" alt="Лого" class="header__logo">
     </header>
@@ -28,35 +28,35 @@
           <img src="./images/Dombai.png" alt="Картинка" class="element__image">
           <div class="element__container">
             <h2 class="element__title">Домбай</h2>
-            <button class="element__like"></button>
+            <button aria-label="like" type="button" class="element__like"></button>
           </div>
         </article>
         <article class="element">
           <img src="./images/Elbrus.png" alt="Картинка" class="element__image">
           <div class="element__container">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__like"></button>
+            <button aria-label="like" type="button" class="element__like"></button>
           </div>
         </article>
         <article class="element">
           <img src="./images/karachaevo.png" alt="Картинка" class="element__image">
           <div class="element__container">
             <h2 class="element__title">Карачаево</h2>
-            <button class="element__like"></button>
+            <button aria-label="like" type="button" class="element__like"></button>
           </div>
         </article>
         <article class="element">
           <img src="./images/Dombai.png" alt="Картинка" class="element__image">
           <div class="element__container">
             <h2 class="element__title">Домбай</h2>
-            <button class="element__like"></button>
+            <button aria-label="like" type="button" class="element__like"></button>
           </div>
         </article>
         <article class="element">
           <img src="./images/Elbrus.png" alt="Картинка" class="element__image">
           <div class="element__container">
             <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__like"></button>
+            <button aria-label="like" type="button" class="element__like"></button>
           </div>
         </article>
         <article class="element">
@@ -77,8 +77,8 @@
       <div class="popup__container page__container">
         <h2 class="popup__text">Редактировать профиль</h2>
         <form name="popup_input" class="popup__form">
-          <input name="name" type="text" placeholder="1" class="popup__input popup__input_name">
-          <input name="description" type="text" placeholder="2" class="popup__input popup__input_description">
+          <input name="name" type="text" class="popup__input popup__input_type_name">
+          <input name="description" type="text" class="popup__input popup__input_type_description">
           <button type="submit" class="popup__save-button">Сохранить</button>
         </form>
       </div>

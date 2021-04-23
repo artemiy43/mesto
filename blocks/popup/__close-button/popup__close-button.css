@@ -1,7 +1,7 @@
 .popup__close-button {
   position: absolute;
-  top: 23%;
-  left: 66%;
+  top: 26%;
+  left: 61%;
   background-image: url(../../../images/Close_Icon.png);
   background-position: center;
   background-size: 100% 100%;
@@ -17,17 +17,31 @@
   cursor: pointer;
 }
 
+@media (max-width: 1500px)
+{
+  .popup__close-button {
+    left: 67%;
+  }
+}
+
 @media (max-width: 950px)
 {
   .popup__close-button {
-    left: 70%;
+    left: 72%;
   }
 }
 
 @media (max-width: 750px)
 {
   .popup__close-button {
-    left: 76%;
+    left: 78%;
+  }
+}
+
+@media (max-width: 600px)
+{
+  .popup__close-button {
+    left: 85%;
   }
 }
 
@@ -36,7 +50,14 @@
   .popup__close-button {
     width: 36px;
     height: 36px;
-    top: 33%;
-    left: 83%;
+    top: 35%;
+    left: 78%;
+  }
+}
+
+@media (max-width: 400px)
+{
+  .popup__close-button {
+    left: 84%;
   }
 }
