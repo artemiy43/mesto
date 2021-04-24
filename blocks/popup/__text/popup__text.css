@@ -8,7 +8,7 @@
   color: #000000;
 }
 
-@media (max-width: 500px)
+@media (max-width: 520px)
 {
   .popup__text {
     font-size: 18px;
