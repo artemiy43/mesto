@@ -24,55 +24,13 @@
       </section>
 
       <section class="elements page__container">
-        <article class="element">
-          <img src="./images/Dombai.png" alt="Картинка" class="element__image">
-          <div class="element__container">
-            <h2 class="element__title">Домбай</h2>
-            <button aria-label="like" type="button" class="element__like"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/Elbrus.png" alt="Картинка" class="element__image">
-          <div class="element__container">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button aria-label="like" type="button" class="element__like"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/karachaevo.png" alt="Картинка" class="element__image">
-          <div class="element__container">
-            <h2 class="element__title">Карачаево</h2>
-            <button aria-label="like" type="button" class="element__like"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/Dombai.png" alt="Картинка" class="element__image">
-          <div class="element__container">
-            <h2 class="element__title">Домбай</h2>
-            <button aria-label="like" type="button" class="element__like"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/Elbrus.png" alt="Картинка" class="element__image">
-          <div class="element__container">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button aria-label="like" type="button" class="element__like"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img src="./images/karachaevo.png" alt="Картинка" class="element__image">
-          <div class="element__container">
-            <h2 class="element__title">Уральские горы</h2>
-            <button aria-label="like" type="button" class="element__like"></button>
-          </div>
-        </article>
       </section>
     </main>
     <footer class="footer page__container">
       <p class="footer__paragraph">&copy; 2020 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup popup_type_edit">
       <div class="popup__container page__container">
         <button aria-label="Close" type="button" class="popup__close-button"></button>
         <h2 class="popup__text">Редактировать профиль</h2>
@@ -83,7 +41,35 @@
         </form>
       </div>
     </div>
+    <div class="popup popup_type_add">
+      <div class="popup__container page__container">
+        <button aria-label="Close" type="button" class="popup__close-button"></button>
+        <h2 class="popup__text">Новое место</h2>
+        <form name="popup_input" class="popup__form">
+          <input name="name" placeholder="Название" type="text" class="popup__input popup__input_type_name">
+          <input name="description" placeholder="Ссылка на картинку" type="text" class="popup__input popup__input_type_description">
+          <button type="submit" class="popup__save-button">Создать</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_image">
+      <div class="popup__container popup__container_image page__container">
+        <button aria-label="Close" type="button" class="popup__close-button popup__close-button_image"></button>
+        <h2 class="popup__text popup__text_image"></h2>
+        <img src="#" alt="Картинка" class="popup__image">
+      </div>
+    </div>
   </div>
+  <template id="element-template">
+    <article class="element">
+      <img src="#" alt="Картинка" class="element__image">
+      <button aria-label="delete" type="button" class="element__delete"></button>
+      <div class="element__container">
+        <h2 class="element__title">sss</h2>
+        <button aria-label="like" type="button" class="element__like"></button>
+      </div>
+    </article>
+  </template>
   <script src="./scripts/script.js"></script>
 </body>
 </html>
