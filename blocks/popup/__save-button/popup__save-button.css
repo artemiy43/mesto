@@ -11,6 +11,7 @@
   color: #FFFFFF;
   opacity: 1;
   margin-bottom: 37px;
+  border: 0;
 }
 
 .popup__save-button:hover {

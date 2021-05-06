@@ -1,6 +1,5 @@
 const editButton = document.querySelector('.edit-button'); //кнопка "редактировать"
 const addButton = document.querySelector('.add-button'); // кнопка "добавить"
-const popup = document.querySelector('.popup'); // popup
 const popupEdit = document.querySelector('.popup_type_edit'); // popup edit
 const popupAdd = document.querySelector('.popup_type_add'); // popup add
 const popupImage = document.querySelector('.popup_type_image'); //popup image
@@ -9,18 +8,18 @@ const closeButtonAdd = popupAdd.querySelector('.popup__close-button'); // кно
 const closeButtonImage = popupImage.querySelector('.popup__close-button'); // кнопка "Закрыть" в блоке popup image
 
 const formElementEdit = popupEdit.querySelector('.popup__form'); // форма блока popup edit
-let nameInput = popupEdit.querySelector('.popup__input_type_name'); // первое текстовое поле из формы popup edit
-let jobInput = popupEdit.querySelector('.popup__input_type_description'); // второе текстовое поле из формы popup edit
+const nameInput = popupEdit.querySelector('.popup__input_type_name'); // первое текстовое поле из формы popup edit
+const jobInput = popupEdit.querySelector('.popup__input_type_description'); // второе текстовое поле из формы popup edit
 
 const formElementAdd = popupAdd.querySelector('.popup__form'); // форма блока popup add
-let nameInputAdd = popupAdd.querySelector('.popup__input_type_name'); // первое текстовое поле из формы popup add
-let jobInputAdd = popupAdd.querySelector('.popup__input_type_description'); // второе текстовое поле из формы popup add
+const nameInputAdd = popupAdd.querySelector('.popup__input_type_name'); // первое текстовое поле из формы popup add
+const jobInputAdd = popupAdd.querySelector('.popup__input_type_description'); // второе текстовое поле из формы popup add
 
-let popupText = popupImage.querySelector('.popup__text_image'); // Надпись в popup Image
-let popupShowImage = popupImage.querySelector('.popup__image'); // картинка в popup Image
+const popupText = popupImage.querySelector('.popup__text_image'); // Надпись в popup Image
+const popupShowImage = popupImage.querySelector('.popup__image'); // картинка в popup Image
 
-let nameOutput = document.querySelector('.profile__name'); // имя в profile
-let jobOutput = document.querySelector('.profile__description'); // описание в profile
+const nameOutput = document.querySelector('.profile__name'); // имя в profile
+const jobOutput = document.querySelector('.profile__description'); // описание в profile
 
 const elementsList = document.querySelector('.elements'); // контейнер элементов
 const templateElement = document.querySelector('#element-template'); // темплейт-элемент
@@ -55,7 +54,7 @@ const initialCards = [                                                          
 function getCard(currentItem) {                                                          // функция создания карточки
   const newElement = templateElement.content.querySelector('.element').cloneNode(true);  //клонируем темплейт
 
-  const elementSrc = newElement.querySelector('.element__image');                          // находим в темплейт картинку
+  const elementImage = newElement.querySelector('.element__image');                          // находим в темплейт картинку
   const elementTitle = newElement.querySelector('.element__title');                        // находим в темплейт надпись
 
   const likeButton = newElement.querySelector('.element__like');                           // находим в темплейт кнопку лайка
@@ -63,18 +62,18 @@ function getCard(currentItem) {                                                 
 
   const deleteButton = newElement.querySelector('.element__delete');                // кнопка удаления карточки
   deleteButton.addEventListener('click', function(){                                // обработчик для кнопки удаления
-    const listItem = deleteButton.closest('.element');
-    listItem.remove();
+    deleteButton.closest('.element').remove();
   });
 
-  elementSrc.addEventListener('click', function(){                                    // обработчик при нажатии на картинку карточки
+  elementImage.addEventListener('click', function(){                                    // обработчик при нажатии на картинку карточки
     popupText.textContent = currentItem.name;
     popupShowImage.src = currentItem.link;
-    toggleModal(popupImage)
+    toggleModal(popupImage);
   })
 
   elementTitle.textContent = currentItem.name;
-  elementSrc.src = currentItem.link;
+  elementImage.src = currentItem.link;
+  elementImage.alt = currentItem.name;
 
   return newElement;
 }
@@ -91,7 +90,7 @@ function toggleModal(elemPopup) {              // функция закрыти�
   jobInput.value = jobOutput.textContent;
 }
 
-function formSubmitHandler (evt) {                // функция редактирования имени и информации о себе в profile
+function handleProfileFormSubmit (evt) {                // функция редактирования имени и информации о себе в profile
   evt.preventDefault();
 
   nameOutput.textContent = nameInput.value;
@@ -100,7 +99,7 @@ function formSubmitHandler (evt) {                // функция редакт
   toggleModal(popupEdit);
 }
 
-function formSubmitHandlerAdd (evt) {                // функция редактирования имени и информации о себе в profile
+function handleCardFormSubmit (evt) {                // функция редактирования имени и информации о себе в profile
   evt.preventDefault();
 
   const card = {
@@ -108,19 +107,17 @@ function formSubmitHandlerAdd (evt) {                // функция реда�
     link: jobInputAdd.value
   };
   const newElement = getCard(card);
-
+  formElementAdd.reset();
   elementsList.prepend(newElement);
   toggleModal(popupAdd);
 }
 
-formElementEdit.addEventListener('submit', formSubmitHandler); // обработчик события редактирования profile
+formElementEdit.addEventListener('submit', handleProfileFormSubmit); // обработчик события редактирования profile
 
-formElementAdd.addEventListener('submit', formSubmitHandlerAdd); // обработчик события редактирования profile
+formElementAdd.addEventListener('submit', handleCardFormSubmit); // обработчик события редактирования profile
 
 editButton.addEventListener('click', function(){toggleModal(popupEdit)});          // обработчик события открытия popup edit
 addButton.addEventListener('click', function(){toggleModal(popupAdd)});           // обработчик события открытия popup add
 closeButtonEdit.addEventListener('click', function(){toggleModal(popupEdit)});        // обработчик события закрытия popup edit
 closeButtonAdd.addEventListener('click', function(){toggleModal(popupAdd)});           // обработчик события закрытия popup add
 closeButtonImage.addEventListener('click', function(){toggleModal(popupImage)});         // обработчик события закрытия popup image
-
-

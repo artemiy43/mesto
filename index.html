@@ -17,10 +17,10 @@
         <img src="./images/Avatar.png" alt="Аватар" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button aria-label="Edit" type="button" class="edit-button"></button>
+          <button aria-label="Редактировать" type="button" class="edit-button"></button>
           <p class="profile__description">Исследователь океана</p>
         </div>
-        <button aria-label="Add" type="button" class="add-button"></button>
+        <button aria-label="Добавить" type="button" class="add-button"></button>
       </section>
 
       <section class="elements page__container">
@@ -32,9 +32,9 @@
 
     <div class="popup popup_type_edit">
       <div class="popup__container page__container">
-        <button aria-label="Close" type="button" class="popup__close-button"></button>
+        <button aria-label="Закрыть" type="button" class="popup__close-button"></button>
         <h2 class="popup__text">Редактировать профиль</h2>
-        <form name="popup_input" class="popup__form">
+        <form name="popup_input_edit" class="popup__form">
           <input name="name" type="text" class="popup__input popup__input_type_name">
           <input name="description" type="text" class="popup__input popup__input_type_description">
           <button type="submit" class="popup__save-button">Сохранить</button>
@@ -43,27 +43,28 @@
     </div>
     <div class="popup popup_type_add">
       <div class="popup__container page__container">
-        <button aria-label="Close" type="button" class="popup__close-button"></button>
+        <button aria-label="Закрыть" type="button" class="popup__close-button"></button>
         <h2 class="popup__text">Новое место</h2>
-        <form name="popup_input" class="popup__form">
+        <form name="popup_input_add" class="popup__form">
           <input name="name" placeholder="Название" type="text" class="popup__input popup__input_type_name">
-          <input name="description" placeholder="Ссылка на картинку" type="text" class="popup__input popup__input_type_description">
+          <input name="description" placeholder="Ссылка на картинку" type="url" class="popup__input popup__input_type_description">
           <button type="submit" class="popup__save-button">Создать</button>
         </form>
       </div>
     </div>
     <div class="popup popup_type_image">
       <div class="popup__container popup__container_image page__container">
-        <button aria-label="Close" type="button" class="popup__close-button popup__close-button_image"></button>
+        <button aria-label="Закрыть" type="button" class="popup__close-button popup__close-button_image"></button>
         <h2 class="popup__text popup__text_image"></h2>
         <img src="#" alt="Картинка" class="popup__image">
+        <!-- popup__close-button_image -->
       </div>
     </div>
   </div>
   <template id="element-template">
     <article class="element">
       <img src="#" alt="Картинка" class="element__image">
-      <button aria-label="delete" type="button" class="element__delete"></button>
+      <button aria-label="Удалить" type="button" class="element__delete"></button>
       <div class="element__container">
         <h2 class="element__title">sss</h2>
         <button aria-label="like" type="button" class="element__like"></button>
