@@ -75,7 +75,6 @@ function getCard(currentItem) {                                                 
   elementTitle.textContent = currentItem.name;
   elementImage.src = currentItem.link;
   elementImage.alt = currentItem.name;
-  console.log(elementImage.alt);
   return newElement;
 }
 
@@ -85,8 +84,30 @@ initialCards.forEach(function(currentItem) {     // рендерим изнач�
   elementsList.append(newCard);
 });
 
+function clickOverlay (evt) {                                 // функция клика по оверлэю
+  if (evt.target.classList.contains('popup_opened')) {
+    toggleModal(evt.target);
+  }
+}
+
+function pressEscape (evt) {                                 // функция нажатия клавиши Escape
+  if (evt.keyCode === 27){
+    const popup = document.querySelector('.popup_opened');
+    toggleModal(popup);
+  }
+}
+
 function toggleModal(elemPopup) {              // функция закрытия/открытия попапа
-  elemPopup.classList.toggle('popup_opened');
+  if (!(elemPopup.classList.contains('popup_opened'))){
+    elemPopup.classList.toggle('popup_opened');
+    document.addEventListener('click', clickOverlay);                // добавление обработчика клика по оверлэю
+    document.addEventListener('keydown', pressEscape);               // добавление обработчика нажатия Escape
+  }
+  else {
+    elemPopup.classList.toggle('popup_opened');
+    document.removeEventListener('click', clickOverlay);              // удаление обработчика клика по оверлэю
+    document.removeEventListener('keydown', pressEscape);            // удаление обработчика нажатия Escape
+  }
 }
 
 function handleProfileFormSubmit (evt) {                // функция редактирования имени и информации о себе в profile
@@ -98,7 +119,7 @@ function handleProfileFormSubmit (evt) {                // функция ред
   toggleModal(popupEdit);
 }
 
-function handleCardFormSubmit (evt) {                // функция редактирования имени и информации о себе в profile
+function handleCardFormSubmit (evt) {                // функция добавления новой карточки
   evt.preventDefault();
 
   const card = {
@@ -113,14 +134,16 @@ function handleCardFormSubmit (evt) {                // функция реда�
 
 formElementEdit.addEventListener('submit', handleProfileFormSubmit); // обработчик события редактирования profile
 
-formElementAdd.addEventListener('submit', handleCardFormSubmit); // обработчик события редактирования profile
+formElementAdd.addEventListener('submit', handleCardFormSubmit); // обработчик события формы добавления карточки
 
-editButton.addEventListener('click', () => {                    // обработчик события открытия popup edit
+editButton.addEventListener('click', () => {   // обработчик события открытия popup edit
+  toggleModal(popupEdit);
   nameInput.value = nameOutput.textContent;
   jobInput.value = jobOutput.textContent;
-  toggleModal(popupEdit);
 });
-addButton.addEventListener('click', function(){toggleModal(popupAdd)});           // обработчик события открытия popup add
-closeButtonEdit.addEventListener('click', function(){toggleModal(popupEdit)});        // обработчик события закрытия popup edit
-closeButtonAdd.addEventListener('click', function(){toggleModal(popupAdd)});           // обработчик события закрытия popup add
+
+addButton.addEventListener('click', function(){toggleModal(popupAdd)}); // обработчик события открытия popup add
+
+closeButtonEdit.addEventListener('click', function(){toggleModal(popupEdit)}); // обработчик события закрытия popup edit
+closeButtonAdd.addEventListener('click', function(){toggleModal(popupAdd)});   // обработчик события закрытия popup add
 closeButtonImage.addEventListener('click', function(){toggleModal(popupImage)});         // обработчик события закрытия popup image
