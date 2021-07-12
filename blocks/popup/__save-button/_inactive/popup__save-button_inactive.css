@@ -4,3 +4,7 @@
   border: 1px solid #000000;
   border-radius: 2px;
 }
+
+.popup__save-button_inactive:hover {
+  cursor: inherit;
+}

@@ -69,7 +69,7 @@ function getCard(currentItem) {                                                 
     popupText.textContent = currentItem.name;
     popupShowImage.src = currentItem.link;
     popupShowImage.alt = currentItem.name;
-    toggleModal(popupImage);
+    openPopup(popupImage);
   })
 
   elementTitle.textContent = currentItem.name;
@@ -86,28 +86,28 @@ initialCards.forEach(function(currentItem) {     // рендерим изнач�
 
 function clickOverlay (evt) {                                 // функция клика по оверлэю
   if (evt.target.classList.contains('popup_opened')) {
-    toggleModal(evt.target);
+    closePopup(evt.target);
   }
 }
 
 function pressEscape (evt) {                                 // функция нажатия клавиши Escape
-  if (evt.keyCode === 27){
+  const escapeKeyCode = 27;
+  if (evt.keyCode === escapeKeyCode){
     const popup = document.querySelector('.popup_opened');
-    toggleModal(popup);
+    closePopup(popup);
   }
 }
 
-function toggleModal(elemPopup) {              // функция закрытия/открытия попапа
-  if (!(elemPopup.classList.contains('popup_opened'))){
-    elemPopup.classList.toggle('popup_opened');
-    document.addEventListener('click', clickOverlay);                // добавление обработчика клика по оверлэю
-    document.addEventListener('keydown', pressEscape);               // добавление обработчика нажатия Escape
-  }
-  else {
-    elemPopup.classList.toggle('popup_opened');
-    document.removeEventListener('click', clickOverlay);              // удаление обработчика клика по оверлэю
-    document.removeEventListener('keydown', pressEscape);            // удаление обработчика нажатия Escape
-  }
+function openPopup (elemPopup) {                                   // функция открытия popup
+  elemPopup.classList.add('popup_opened');
+  document.addEventListener('click', clickOverlay);                // добавление обработчика клика по оверлэю
+  document.addEventListener('keydown', pressEscape);               // добавление обработчика нажатия Escape
+}
+
+function closePopup (elemPopup){                                   // функция закрытия popup
+  elemPopup.classList.remove('popup_opened');
+  document.removeEventListener('click', clickOverlay);              // удаление обработчика клика по оверлэю
+  document.removeEventListener('keydown', pressEscape);            // удаление обработчика нажатия Escape
 }
 
 function handleProfileFormSubmit (evt) {                // функция редактирования имени и информации о себе в profile
@@ -116,7 +116,7 @@ function handleProfileFormSubmit (evt) {                // функция ред
   nameOutput.textContent = nameInput.value;
   jobOutput.textContent = jobInput.value;
 
-  toggleModal(popupEdit);
+  closePopup(popupEdit);
 }
 
 function handleCardFormSubmit (evt) {                // функция добавления новой карточки
@@ -129,7 +129,10 @@ function handleCardFormSubmit (evt) {                // функция доба�
   const newElement = getCard(card);
   formElementAdd.reset();
   elementsList.prepend(newElement);
-  toggleModal(popupAdd);
+  const buttonAdd = popupAdd.querySelector('.popup__save-button');
+  buttonAdd.classList.add('popup__save-button_inactive');
+  buttonAdd.disabled = true;
+  closePopup(popupAdd);
 }
 
 formElementEdit.addEventListener('submit', handleProfileFormSubmit); // обработчик события редактирования profile
@@ -137,13 +140,13 @@ formElementEdit.addEventListener('submit', handleProfileFormSubmit); // обра
 formElementAdd.addEventListener('submit', handleCardFormSubmit); // обработчик события формы добавления карточки
 
 editButton.addEventListener('click', () => {   // обработчик события открытия popup edit
-  toggleModal(popupEdit);
+  openPopup(popupEdit);
   nameInput.value = nameOutput.textContent;
   jobInput.value = jobOutput.textContent;
 });
 
-addButton.addEventListener('click', function(){toggleModal(popupAdd)}); // обработчик события открытия popup add
+addButton.addEventListener('click', function(){openPopup(popupAdd)}); // обработчик события открытия popup add
 
-closeButtonEdit.addEventListener('click', function(){toggleModal(popupEdit)}); // обработчик события закрытия popup edit
-closeButtonAdd.addEventListener('click', function(){toggleModal(popupAdd)});   // обработчик события закрытия popup add
-closeButtonImage.addEventListener('click', function(){toggleModal(popupImage)});         // обработчик события закрытия popup image
+closeButtonEdit.addEventListener('click', function(){closePopup(popupEdit)}); // обработчик события закрытия popup edit
+closeButtonAdd.addEventListener('click', function(){closePopup(popupAdd)});   // обработчик события закрытия popup add
+closeButtonImage.addEventListener('click', function(){closePopup(popupImage)});         // обработчик события закрытия popup image
