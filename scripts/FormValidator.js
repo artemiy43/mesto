@@ -61,4 +61,12 @@ export class FormValidator {
     errorElement.classList.remove(this._errorClass);                                       //span`у удаляем нужный класс
     errorElement.textContent = '';
   }
+
+  resetValidation() {                                                                  // метод очистки инпутов от ошибок и изменение состояния кнопки
+    this._toggleButtonState();
+
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement)
+    });
+  }
 }

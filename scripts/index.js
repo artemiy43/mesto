@@ -1,4 +1,4 @@
-import {Card, popupImage} from './card.js';
+import {Card, popupImage} from './Сard.js';
 import { FormValidator } from './FormValidator.js';
 
 const editButton = document.querySelector('.edit-button'); //кнопка "редактировать"
@@ -80,10 +80,14 @@ function closePopup (elemPopup){                                   // функц
   document.removeEventListener('keydown', pressEscape);            // удаление обработчика нажатия Escape
 }
 
+function createCard (name, link, selector) {                   // функция создания карточки
+  const newCard = new Card(name, link, selector);              // создаём объект класса Card
+  const card = newCard.createCard();                           // вызываем метод создания карточки
+  return card;                                                 // возвращает готовую карточку
+}
 
-initialCards.forEach(function(currentItem) {     // рендерим изначальный массив
-  const newCard = new Card(currentItem.name, currentItem.link, '#element-template'); // создаём объект класса Card
-  const card = newCard.createCard();                                                 // вызываем метод создания карточки
+initialCards.forEach(function(currentItem) {                  // рендерим изначальный массив
+  const card = createCard(currentItem.name, currentItem.link, '#element-template');
   elementsList.append(card);
 });
 
@@ -103,13 +107,9 @@ function handleCardFormSubmit (evt) {                // функция доба�
     name: nameInputAdd.value,
     link: jobInputAdd.value
   };
-  const newElement = new Card(card.name, card.link, '#element-template');     // создаём объект класса Card
-  const newwElement = newElement.createCard();                                // вызываем метод создания карточки
+  const newElement = createCard(card.name, card.link, '#element-template');
   formElementAdd.reset();
-  elementsList.prepend(newwElement);
-  const buttonAdd = popupAdd.querySelector('.popup__save-button');
-  buttonAdd.classList.add('popup__save-button_inactive');
-  buttonAdd.disabled = true;
+  elementsList.prepend(newElement);
   closePopup(popupAdd);
 }
 
@@ -121,9 +121,13 @@ editButton.addEventListener('click', () => {   // обработчик собы�
   openPopup(popupEdit);
   nameInput.value = nameOutput.textContent;
   jobInput.value = jobOutput.textContent;
+  validatorPopupEdit.resetValidation();            // очищаем форму popup Edit
 });
 
-addButton.addEventListener('click', function(){openPopup(popupAdd)}); // обработчик события открытия popup add
+addButton.addEventListener('click', function() {     // обработчик события открытия popup add
+  openPopup(popupAdd);
+  validatorPopupAdd.resetValidation();               // очищаем форму popup Add
+});
 
 closeButtonEdit.addEventListener('click', function(){closePopup(popupEdit)}); // обработчик события закрытия popup edit
 closeButtonAdd.addEventListener('click', function(){closePopup(popupAdd)});   // обработчик события закрытия popup add
@@ -138,12 +142,7 @@ const config ={                                                                 
   errorClass: 'popup__input-error_active'
 };
 
-
-const formList = Array.from(document.querySelectorAll(config.formSelector));               // находим список всех форм на страничке
-formList.forEach(function(formElement) {
-  const validationTurnedOn = new FormValidator(config, formElement);                       // создаём для формы объект класса FormValidator
-  formElement.addEventListener('submit', function (evt) {                                  // каждой форме
-    evt.preventDefault();                                                                  // отменяем стандартное поведение
-  });
-  validationTurnedOn.enableValidation();                                                   // запускаем валидацию формы
-});
+const validatorPopupEdit = new FormValidator(config, formElementEdit);     // создаём валидатор для формы popup Edit
+validatorPopupEdit.enableValidation();                                     // запускаем валидацию формы popup Edit
+const validatorPopupAdd = new FormValidator(config, formElementAdd);       // создаём валидатор для формы popup Add
+validatorPopupAdd.enableValidation();                                      // запускаем валидацию формы popup Add
