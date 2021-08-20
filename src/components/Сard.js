@@ -1,12 +1,13 @@
 export const popupImage = document.querySelector('.popup_type_image'); //popup image
 const popupText = popupImage.querySelector('.popup__text_image'); // Надпись в popup Image
 const popupShowImage = popupImage.querySelector('.popup__image'); // картинка в popup Image
-import {openPopup} from './index.js';
-export class Card {
-  constructor(name, link, template_selector) {
+
+export default class Card {
+  constructor({name, link}, handleCardClick, template_selector) {
     this._name = name;
     this._link = link;
     this._template_selector = template_selector;
+    this._handleCardClick = handleCardClick;
   }
   _getTemplate(){
     const newElement = document.querySelector(this._template_selector).content.querySelector('.element').cloneNode(true);
@@ -23,7 +24,7 @@ export class Card {
     });
 
     this._image.addEventListener('click', () =>{                                    // обработчик при нажатии на картинку карточки
-      this._handleImageClick();
+      this._handleCardClick(this._name, this._link);
     });
   }
 
@@ -33,13 +34,6 @@ export class Card {
 
   _handleDeleteClick() {
     this._delete.closest('.element').remove();
-  }
-
-  _handleImageClick() {
-    popupText.textContent = this._name;
-     popupShowImage.src = this._link;
-     popupShowImage.alt = this._name;
-     openPopup(popupImage);
   }
 
   createCard() {
