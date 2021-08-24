@@ -1,12 +1,12 @@
 export default class Card {
-  constructor({name, link}, handleCardClick, template_selector) {
+  constructor({name, link}, handleCardClick, templateSelector) {
     this._name = name;
     this._link = link;
-    this._template_selector = template_selector;
+    this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
   _getTemplate(){
-    const newElement = document.querySelector(this._template_selector).content.querySelector('.element').cloneNode(true);
+    const newElement = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
     return newElement;
   }
 

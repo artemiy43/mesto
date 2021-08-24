@@ -37,7 +37,7 @@ export const config ={                                                          
 export const elementsList = document.querySelector('.elements'); // контейнер элементов
 export const elementsListSelector = '.elements';
 export const elementSelector = '#element-template';
-// const templateElement = document.querySelector('#element-template'); // темплейт-элемент
+
 export const editButton = document.querySelector('.edit-button'); //кнопка "редактировать"
 export const addButton = document.querySelector('.add-button'); // кнопка "добавить"
 export const popupEdit = document.querySelector('.popup_type_edit'); // popup edit
@@ -52,13 +52,7 @@ export const nameInput = popupEdit.querySelector('.popup__input_type_name'); // 
 export const jobInput = popupEdit.querySelector('.popup__input_type_description'); // второе текстовое поле из формы popup edit
 
 export const formElementAdd = popupAdd.querySelector('.popup__form'); // форма блока popup add
-//export const nameInputAdd = popupAdd.querySelector('.popup__input_type_name'); // первое текстовое поле из формы popup add
-//export const jobInputAdd = popupAdd.querySelector('.popup__input_type_description'); // второе текстовое поле из формы popup add
 
 
 export const nameOutputSelector = '.profile__name'; // имя в profile selector
 export const jobOutputSelector = '.profile__description'; // описание в profile selector
-
-//export const popupImage = document.querySelector('.popup_type_image'); //popup image
-//export const popupText = popupImage.querySelector('.popup__text_image'); // Надпись в popup Image
-//export const popupShowImage = popupImage.querySelector('.popup__image'); // картинка в popup Image

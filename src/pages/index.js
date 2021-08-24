@@ -1,63 +1,72 @@
 import '../pages/index.css';
 
-import { initialCards, elementsListSelector, elementSelector, config, editButton, addButton, formElementAdd, formElementEdit, nameInput, jobInput, popupAddSelector, popupEditSelector, nameOutputSelector, jobOutputSelector  } from '../utils/constants.js';
+import Card from '../components/Сard.js';
+import { initialCards, elementsListSelector, elementSelector, config, editButton, addButton, formElementAdd, formElementEdit, nameInput, jobInput, popupAddSelector, popupEditSelector, nameOutputSelector, jobOutputSelector, popupImageSelector  } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-import {createCard} from '../utils/utils.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+
+function createCard ({ name, link}) {                   // функция создания карточки
+  const newCard = new Card(                             // создаём объект класса Card
+    { name, link},
+    () => {
+      popupImage.open({ name, link});
+    },
+    elementSelector
+  );
+  return newCard.createCard();                          // возвращает готовую карточку
+}
 
 const cardList = new Section({
   data: initialCards,
   renderer: (item) => {
-    const card = createCard(item, elementSelector);
+    const card = createCard(item);
     cardList.addItem(card);
-    },
+    }
   },
   elementsListSelector
 );
 
 cardList.renderItems();
 
-const popupAddd = new PopupWithForm(
+const popupAdd = new PopupWithForm(                                    // попап Add
   popupAddSelector,
   (element) => {
-    //evt.preventDefault();
 
     const card = {
-      // name: nameInputAdd.value,
-      // link: jobInputAdd.value
       name: element.name,
       link: element.description
     };
     const newElement = createCard(card, elementSelector);
     cardList.addItem(newElement);
-    popupAddd.close();
+    popupAdd.close();
   }
 );
 
-const infoEdit = new UserInfo({
+export const popupImage = new PopupWithImage(popupImageSelector)         // попап Image
+
+const infoEdit = new UserInfo({                                          // объект для обработки информации пользователя
   name: nameOutputSelector,
   description: jobOutputSelector
 });
 
-const popupEditt = new PopupWithForm(
+const popupEdit = new PopupWithForm(                                    // попап Edit
   popupEditSelector,
   (element)=>{
-    //evt.preventDefault();
+    infoEdit.setUserInfo(element.name, element.description);
 
-    //infoEdit.setUserInfo(nameInput.value, jobInput.value)
-    infoEdit.setUserInfo(element.name, element.description)
-
-    popupEditt.close();
+    popupEdit.close();
   }
 );
 
-popupAddd.setEventListeners();
-popupEditt.setEventListeners();
+popupAdd.setEventListeners();
+popupEdit.setEventListeners();
+popupImage.setEventListeners();
 
 editButton.addEventListener('click', () => {   // обработчик события открытия popup edit
-  popupEditt.open();
+  popupEdit.open();
 
   const user = infoEdit.getUserInfo();
 
@@ -68,7 +77,7 @@ editButton.addEventListener('click', () => {   // обработчик собы�
 });
 
 addButton.addEventListener('click', function() {     // обработчик события открытия popup add
-  popupAddd.open();
+  popupAdd.open();
   validatorPopupAdd.resetValidation();               // очищаем форму popup Add
 });
 
