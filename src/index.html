@@ -13,7 +13,10 @@
     </header>
     <main class="content">
       <section class="profile page__container">
-        <img src="<%=require('./images/Avatar.png')%>" alt="Аватар" class="profile__avatar">
+        <div class="profile__container">
+          <img src="<%=require('./images/Avatar.png')%>" alt="Аватар" class="profile__avatar">
+          <div class="profile__overlay"></div>
+        </div>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button aria-label="Редактировать" type="button" class="edit-button"></button>
@@ -61,6 +64,26 @@
         <img src="#" alt="Картинка" class="popup__image">
       </div>
     </div>
+    <div class="popup popup_type_delete">
+      <div class="popup__container page__container">
+        <button aria-label="Закрыть" type="button" class="popup__close-button"></button>
+        <h2 class="popup__text">Вы уверены?</h2>
+        <form name="popup_input_delete" class="popup__form" novalidate>
+          <button type="submit" class="popup__save-button">Да</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_avatar">
+      <div class="popup__container page__container">
+        <button aria-label="Закрыть" type="button" class="popup__close-button"></button>
+        <h2 class="popup__text">Обновить аватар</h2>
+        <form name="popup_input_avatar" class="popup__form" novalidate>
+          <input name="description" placeholder="Ссылка на картинку" type="url" class="popup__input popup__input_type_description" id="description-input-avatar" required>
+          <span class="popup__input-error description-input-avatar-error"></span>
+          <button type="submit" class="popup__save-button">Создать</button>
+        </form>
+      </div>
+    </div>
   </div>
   <template id="element-template">
     <article class="element">
@@ -69,6 +92,7 @@
       <div class="element__container">
         <h2 class="element__title"></h2>
         <button aria-label="Нравится" type="button" class="element__like"></button>
+        <p class="element__likes">1000</p>
       </div>
     </article>
   </template>

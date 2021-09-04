@@ -14,6 +14,18 @@ export default class PopupWithForm extends Popup{
     super.setEventListeners();
   }
 
+  setNewSubmitColback(newColback) {
+    this._formElement.removeEventListener('submit', (evt)=> {
+      evt.preventDefault();
+      this._colback(this._getInputValues());
+    });
+
+    this._formElement.addEventListener('submit', (evt)=> {
+      evt.preventDefault();
+      newColback();
+    });
+  }
+
   close() {
     super.close();
     this._formElement.reset();
