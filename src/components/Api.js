@@ -4,6 +4,13 @@ export default class Api {                                //класс API дл�
     this._contentType = contentType;                      //контент тайп
   }
 
+  _checkStatus(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getInitialCards() {                                                        //метод для получения карточек
   return fetch('https://mesto.nomoreparties.co/v1/cohort-27/cards', {
     method: 'GET',
@@ -12,15 +19,8 @@ export default class Api {                                //класс API дл�
       'Content-Type': this._contentType
     }
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then((data) => {
-    //console.log(data);
-    return Promise.resolve(data);
+  .then((res) =>{
+    return this._checkStatus(res);
   });
   }
 
@@ -37,14 +37,8 @@ export default class Api {                                //класс API дл�
     })
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => {
-      return Promise.resolve(data);
-    })
+      return this._checkStatus(res);
+    });
   }
 
   getUserInfo() {                                                          //метод для получения информации о пользователе
@@ -56,13 +50,7 @@ export default class Api {                                //класс API дл�
       }
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then((data) => {
-      return Promise.resolve(data);
+      return this._checkStatus(res);
     });
   }
 
@@ -80,13 +68,7 @@ export default class Api {                                //класс API дл�
     })
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => {
-      return Promise.resolve(data);
+      return this._checkStatus(res);
     });
   }
 
@@ -99,10 +81,7 @@ export default class Api {                                //класс API дл�
     }
     })
     .then((res) => {
-      if (res.ok) {
-        return res.status;
-      }
-    return Promise.reject(`Ошибка: ${res.status}`);
+      return this._checkStatus(res);
     });
   }
 
@@ -115,10 +94,7 @@ export default class Api {                                //класс API дл�
       }
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._checkStatus(res);
     });
   }
 
@@ -131,10 +107,7 @@ export default class Api {                                //класс API дл�
       }
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._checkStatus(res);
     });
   }
 
@@ -150,13 +123,7 @@ export default class Api {                                //класс API дл�
     })
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .then(data => {
-      return Promise.resolve(data);
+      return this._checkStatus(res);
     });
   }
 }

@@ -26,7 +26,6 @@ export default class Card {
     if (this._flag) {
       this._delete.addEventListener('click', () =>{                                // обработчик для кнопки удаления
         this._handleDeletePopup();
-        //this._handleDeleteClick();
       });
     }
 
@@ -66,11 +65,6 @@ export default class Card {
         this.isLiked = true;
       }
     });
-
-    // if(this.isLiked===true)
-    // {
-    //   this._like.classList.add('element__like_active');
-    // }
 
     this._title.textContent = this._name;
     this._image.src = this._link;

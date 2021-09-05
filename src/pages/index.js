@@ -8,14 +8,8 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
-
-function isLoading(form, flag) {                                       //функция для улучшения UX
-  const button = form.querySelector('.popup__save-button');            // находим необходимую кнопку на форме
-  if (flag===true)                                                     // в зависимости от флага, меняем её текст
-    button.textContent = 'Сохранение...';
-  else
-    button.textContent = 'Сохранено';
-}
+import { isLoading } from '../utils/utils.js';
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
 
 const api = new Api({                                                //объект класс API
   token: '667a2ab0-f08f-4bf2-a0b7-ab2d1cf10d2c',                     // токен
@@ -37,11 +31,10 @@ elementsListSelector
 
 api.getUserInfo()                                                 // вызываем загрузку данных пользователя с сервера
 .then((res) => {                                                  // если всё ок
-  infoEdit.setUserInfo(res.name, res.about, res.avatar);          // в prodile загружаем нужное имя, описание и аватар
+  userInfo.setUserInfo(res.name, res.about, res.avatar);          // в prodile загружаем нужное имя, описание и аватар
   const id = res._id;                                            //id пользователя
   api.getInitialCards()                                          // вызываем загрузку карточек
   .then(res => {                                                 // если всё ок
-    console.log(res);
     const flag = true;                                             // изначальный флаг, который мы передаём в cardList.renderItems
     cardList.renderItems(res, flag, id);                         //в renderItems сразу отдаём массив
   })
@@ -60,11 +53,12 @@ function createCard (item, flag, id) {                   // функция со�
       popupImage.open(item);                            //открывается popupImage с нужной картинкой
     },
     () => {                                             //функция при нажатии на кнопку удаления карточки
-      popupDelete.open();                               //открывается popupDelete
-      popupDelete.setNewSubmitColback(()=> {            //меняем колбэк формы отправки popupDelete
+      popupDeleteCard.open();                               //открывается popupDelete
+      popupDeleteCard.setSubmitCallback(()=> {            //меняем колбэк формы отправки popupDelete
         api.deleteCard(item._id)                        //запрос на удаление карточки
         .then(res =>{
           newCard.remove();
+          popupDeleteCard.close();
         })
         .catch(err => {
           console.log(err);
@@ -88,7 +82,7 @@ function createCard (item, flag, id) {                   // функция со�
       {
         api.deleteLikeCard(item._id)                     // запрос на удаление лайка с карточки
         .then(res => {                                   // если всё ок
-          likes.textContent = item.likes.length - 1;     // уменьшаем количество лайков в вёрстке
+          likes.textContent = item.likes.length;     // уменьшаем количество лайков в вёрстке
           newCard.isLiked=false;                         // ставим значение, что карточка теперь не лайкнута
           console.log(res);
         })
@@ -105,22 +99,23 @@ function createCard (item, flag, id) {                   // функция со�
   return newCard.createCard();                          // возвращает готовую карточку
 }
 
-const popupAdd = new PopupWithForm(                                    // попап Add
+const popupAddCard = new PopupWithForm(                                    // попап Add
   popupAddSelector,                                          // попап селектор
   (element) => {                                        //функция сабмита формы попапа
     const card = {                                      // создаём объект с свойствами карточки
       name: element.name,                              //название
       link: element.description,                       //ссылка
-      likes: []                                        // пустой массив лайков, тк карточка только только будет создана
+      likes: [],                                        // пустой массив лайков, тк карточка только только будет создана
     };
     isLoading(formElementAdd, true);                   //функция показа загрузки
     api.addNewCard(element.name, element.description)  // запрос на добавление новой карточки
     .then(res => {                                     // если всё ок
-      console.log(res);
-      const id = res._id;                              //id пользователя
-      const newElement = createCard(card, true, id);   // создаём новую карточку
+      console.log(res);                            //id пользователя
+      card._id = res._id;
+      const ownerId = res.owner._id;
+      const newElement = createCard(card, true, ownerId);   // создаём новую карточку
       cardList.addItem(newElement);                    // добавляем в DOM
-      popupAdd.close();                                // закрываем попап
+      popupAddCard.close();                                // закрываем попап
     })
     .catch(err => {
       console.log(err);
@@ -131,22 +126,23 @@ const popupAdd = new PopupWithForm(                                    // поп
   }
 );
 
-export const popupImage = new PopupWithImage(popupImageSelector)         // попап Image
+const popupImage = new PopupWithImage(popupImageSelector)         // попап Image
 
-const infoEdit = new UserInfo({                                          // объект для обработки информации пользователя
+const userInfo = new UserInfo({                                          // объект для обработки информации пользователя
   name: nameOutputSelector,                                              // имя
   description: jobOutputSelector,                                        //описание
   avatar: userAvatarSelector                                             //аватар
 });
 
-const popupEdit = new PopupWithForm(                                    // попап Edit
+const popupEditProfile = new PopupWithForm(                                    // попап Edit
   popupEditSelector,                                                    // попап селектор
   (element)=>{                                                          // функция сабмита формы
     isLoading(formElementEdit, true);                                   // показ загрузки данных
     api.setUserInfo(element.name, element.description)                  //запрос на изменение информации о пользователе
     .then(res => {                                                      // если всё ок
       console.log(res);
-      infoEdit.setUserInfo(res.name, res.about, res.avatar);          //меняем информацию в вёрстке
+      userInfo.setUserInfo(res.name, res.about, res.avatar);          //меняем информацию в вёрстке
+      popupEditProfile.close();
     })
     .catch(err => {
       console.log(err);
@@ -154,7 +150,6 @@ const popupEdit = new PopupWithForm(                                    // по�
     .finally(() =>{
       isLoading(formElementEdit, false);                                //заканчиваем показ загрузки данных
     });
-    popupEdit.close();                                                  //закрываем попап
   }
 );
 
@@ -165,7 +160,8 @@ const popupAvatar = new PopupWithForm(                                //попа
     api.setNewAvatar(element.description)                             //запрос на изменение аватара
     .then(res => {                                                    // если всё ок
       console.log(res);
-      infoEdit.setUserAvatar(element.description);                    // меняем аватар в вёрстке
+      userInfo.setUserAvatar(element.description);                    // меняем аватар в вёрстке
+      popupAvatar.close();                                              // закрытие попапа
     })
     .catch(err => {
       console.log(err);
@@ -173,21 +169,17 @@ const popupAvatar = new PopupWithForm(                                //попа
     .finally(()=> {
       isLoading(formElementAvatar, false);                            //убираем загрузку данных
     });
-    popupAvatar.close();                                              // закрытие попапа
   }
 );
 
-const popupDelete = new PopupWithForm(             //попап удаления карточки
+const popupDeleteCard = new PopupWithConfirm(             //попап удаления карточки
   popupDeleteSelector,                             // попап селектор
-  () => {                                          // функция сабмита формы, основную функцию сабмита формы удаления мы ставим в функции createCard при создании карточки
-    popupDelete.close();
-  }
 );
 
-popupAdd.setEventListeners();             // вешаем слушатели на попапы
-popupEdit.setEventListeners();
+popupAddCard.setEventListeners();             // вешаем слушатели на попапы
+popupEditProfile.setEventListeners();
 popupImage.setEventListeners();
-popupDelete.setEventListeners();
+popupDeleteCard.setEventListeners();
 popupAvatar.setEventListeners();
 
 userAvatar.addEventListener('click', () => {         // при нажатии на аватар
@@ -196,21 +188,16 @@ userAvatar.addEventListener('click', () => {         // при нажатии н
 });
 
 editButton.addEventListener('click', () => {   // обработчик события открытия popup edit
-  popupEdit.open();                            // открываем попап редактирования
+  popupEditProfile.open();                            // открываем попап редактирования
 
-  api.getUserInfo()                            // запрос на получение информации о пользователе, это нужно чтобы вставить данные в input'ы при открытии попапа
-  .then((res) => {
-    nameInput.value = res.name;
-    jobInput.value = res.about;
-  })
-  .catch((err)=>{
-    console.log(err);
-  });
+  const user = userInfo.getUserInfo();
+  nameInput.value = user.userName;
+  jobInput.value = user.userDescription;
   validatorPopupEdit.resetValidation();            // очищаем форму popup Edit
 });
 
 addButton.addEventListener('click', function() {     // обработчик события открытия popup add
-  popupAdd.open();
+  popupAddCard.open();
   validatorPopupAdd.resetValidation();               // очищаем форму popup Add
 });
 

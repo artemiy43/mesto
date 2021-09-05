@@ -14,12 +14,15 @@ export default class UserInfo {
   }
 
   setUserInfo(newUserName, newUserDescription, newAvatar) {  // метод для установки новой информации о пользователе в вёрстку
-    this._userName.textContent = newUserName;
-    this._userDescription.textContent = newUserDescription;
-    this._userAvatar.src = newAvatar;
+    if (newUserName && newUserDescription && newAvatar) {
+      this._userName.textContent = newUserName;
+      this._userDescription.textContent = newUserDescription;
+      this._userAvatar.src = newAvatar;
+    }
   }
 
   setUserAvatar(newAvatar) {                              // метод изменения аватара пользователя
-    this._userAvatar.src = newAvatar;
+    if (newAvatar)
+      this._userAvatar.src = newAvatar;
   }
 }
