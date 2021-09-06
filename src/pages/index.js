@@ -114,7 +114,7 @@ const popupAddCard = new PopupWithForm(                                    // п
       card._id = res._id;
       const ownerId = res.owner._id;
       const newElement = createCard(card, true, ownerId);   // создаём новую карточку
-      cardList.addItem(newElement);                    // добавляем в DOM
+      cardList.addItemFirst(newElement);                    // добавляем в DOM первым элементом
       popupAddCard.close();                                // закрываем попап
     })
     .catch(err => {
